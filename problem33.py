@@ -1,23 +1,28 @@
+import math
 
 
+def problem33():
+    num_total = 1
+    den_total = 1
 
-for den in range(10, 100):
-    for num in range(10, den):
-        quotient = num/den
+    for den in range(10, 100):
+        for num in range(10, den):
+            quotient = num/den
 
-        if den % 10 == 0:
-            continue
+            if den % 10 == 0:
+                continue
 
-        if (num % 10) / (den % 10) == quotient and num // 10 == den // 10 or \
-           (num % 10) / (den // 10) == quotient and num // 10 == den % 10 or \
-           (num // 10) / (den % 10) == quotient and num % 10 == den // 10 or \
-           (num // 10) / (den // 10) == quotient and num % 10 == den % 10:
-           print(num, den)
+            if (num % 10) / (den % 10) == quotient and num // 10 == den // 10 or \
+            (num % 10) / (den // 10) == quotient and num // 10 == den % 10 or \
+            (num // 10) / (den % 10) == quotient and num % 10 == den // 10 or \
+            (num // 10) / (den // 10) == quotient and num % 10 == den % 10:
+                num_total *= num
+                den_total *= den
+
+    return den_total / math.gcd(num_total, den_total)
 
 
-# 16 / 64
-# 26 / 65
-# 19 / 95
-# 49 / 98
-
-# (1/4) * (2/5) * (1/5) * (1/2) = (2/200) = (1/100)
+if __name__ == '__main__':
+    solution = problem33()
+    print(solution)
+    assert solution == 100

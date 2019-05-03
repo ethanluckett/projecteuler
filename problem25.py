@@ -1,7 +1,7 @@
+import math
 
-fibs = {}
 
-def fib(n):
+def fib(fibs, n):
     if n in fibs:
         return fibs[n]
     else:
@@ -9,10 +9,21 @@ def fib(n):
             fibs[n] = 1
             return 1
         else:
-            result = fib(n-1) + fib(n-2)
+            result = fib(fibs, n-1) + fib(fibs, n-2)
             fibs[n] = result
             return result
 
-# just keep calculating bigger values to fill fibs
-# until log10(fib(n)) == 999
 
+def problem25():
+    fibs = {}
+    n = 2
+    while math.log10(fib(fibs, n)) < 999:
+        n += 1
+
+    return n
+
+
+if __name__ == '__main__':
+    solution = problem25()
+    print(solution)
+    assert solution == 4782
