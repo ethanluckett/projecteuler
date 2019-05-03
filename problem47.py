@@ -1,5 +1,6 @@
 import math
 
+
 def get_primes():
     limit = 1000000
     # sieve of eratosthenes
@@ -23,13 +24,19 @@ def distinct_prime_factors(primes, n):
     return factors
 
 
-primes = get_primes()
+def problem47():
+    primes = get_primes()
+
+    i = 10
+    lst = [0, 0, 0, 0]
+    while lst != [4, 4, 4, 4]:
+        lst = lst[1:] + [len(distinct_prime_factors(primes, i))]
+        i += 1
+
+    return i-4 # i-4 since the lst is [i-4, i-3, i-2, i-1]
 
 
-i = 10
-lst = [0, 0, 0, 0]
-while lst != [4, 4, 4, 4]:
-    lst = lst[1:] + [len(distinct_prime_factors(primes, i))]
-    i += 1
-
-print(i-4) # i-3 since the lst is [i-4, i-3, i-2, i-1]
+if __name__ == '__main__':
+    solution = problem47()
+    print(solution)
+    assert solution == 134043

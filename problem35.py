@@ -1,4 +1,3 @@
-
 def is_circular(primes, p):
     p = str(p)
     rot = p[-1] + p[:-1]
@@ -9,13 +8,20 @@ def is_circular(primes, p):
     return True
 
 
-# sieve of eratosthenes
-primes = set(range(2, 1000000))
-for i in range(1000):
-    if i in primes:
-        for j in range(i**2, 1000000, i):
-            primes.discard(j)
+def problem35():
+    # sieve of eratosthenes
+    primes = set(range(2, 1000000))
+    for i in range(1000):
+        if i in primes:
+            for j in range(i**2, 1000000, i):
+                primes.discard(j)
 
 
-circular_primes = list(filter(lambda p: is_circular(primes, p), primes))
-print(len(circular_primes))
+    circular_primes = list(filter(lambda p: is_circular(primes, p), primes))
+    return len(circular_primes)
+
+
+if __name__ == '__main__':
+    solution = problem35()
+    print(solution)
+    assert solution == 55

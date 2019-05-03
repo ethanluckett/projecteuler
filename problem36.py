@@ -1,4 +1,3 @@
-
 def is_palindrome(x):
     str_x = str(x)
     bin_x = bin(x)[2:]
@@ -9,5 +8,13 @@ def is_palindrome(x):
 
     return b2 and b10
 
-palindromes = list(filter(is_palindrome, range(1000000)))
-print(sum(palindromes))
+
+def problem36():
+    palindromes = list(filter(is_palindrome, range(1000000)))
+    return sum(palindromes)
+
+
+if __name__ == '__main__':
+    solution = problem36()
+    print(solution)
+    assert solution == 872187

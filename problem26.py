@@ -1,5 +1,3 @@
-
-
 def repeat_len(x):
     # set of quotients and remainders
     qrs = set()
@@ -20,12 +18,19 @@ def repeat_len(x):
     return len(qrs)
 
 
-max_d = 0
-max_len = 0
-for d in range(1, 1000):
-    l = repeat_len(d)
-    if l > max_len:
-        max_len = l
-        max_d = d
+def problem26():
+    max_d = 0
+    max_len = 0
+    for d in range(1, 1000):
+        l = repeat_len(d)
+        if l > max_len:
+            max_len = l
+            max_d = d
 
-print('{} repeats after {} digits'.format(max_d, max_len))
+    return max_d
+
+
+if __name__ == '__main__':
+    solution = problem26()
+    print(solution)
+    assert solution == 983

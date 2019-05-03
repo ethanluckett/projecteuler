@@ -1,26 +1,34 @@
 import math
 
-k = 1
-lowest_D = 1e100
-while k != -1:
-    k += 1
-    pk = k * (3*k - 1) // 2
 
-    diff = pk - lowest_D
-    if diff > 0:
-        inverse = int(math.ceil((math.sqrt(24*diff + 1) + 1) / 6))
-    else:
-        inverse = 0
+def problem44():
+    k = 1
+    lowest_D = 1e100
+    while k != -1:
+        k += 1
+        pk = k * (3*k - 1) // 2
 
-    start = max(1, inverse)
-    if start == k:
-        break
+        diff = pk - lowest_D
+        if diff > 0:
+            inverse = int(math.ceil((math.sqrt(24*diff + 1) + 1) / 6))
+        else:
+            inverse = 0
 
-    for j in range(start, k):
-        pj = j * (3*j - 1) // 2
-        s = (math.sqrt(24*(pj+pk) + 1) + 1) / 6
-        d = (math.sqrt(24*(pk-pj) + 1) + 1) / 6
-        if s == int(s) and d == int(d) and pk-pj < lowest_D:
-            lowest_D = pk-pj
+        start = max(1, inverse)
+        if start == k:
+            break
 
-print(lowest_D)
+        for j in range(start, k):
+            pj = j * (3*j - 1) // 2
+            s = (math.sqrt(24*(pj+pk) + 1) + 1) / 6
+            d = (math.sqrt(24*(pk-pj) + 1) + 1) / 6
+            if s == int(s) and d == int(d) and pk-pj < lowest_D:
+                lowest_D = pk-pj
+
+    return lowest_D
+
+
+if __name__ == '__main__':
+    solution = problem44()
+    print(solution)
+    assert solution == 5482660

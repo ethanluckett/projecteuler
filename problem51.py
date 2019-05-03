@@ -1,4 +1,3 @@
-import sys
 import numpy as np
 from collections import Counter
 
@@ -57,6 +56,7 @@ def in_same_family(p1, p2, n_diffs):
         return False
     return True
 
+
 # e.g. '772' has 2
 def count_duplicates(p):
     counts = [0]*10
@@ -65,11 +65,11 @@ def count_duplicates(p):
     return max(counts)
 
 
-if __name__ == '__main__':
+def problem51():
     primes = primesfrom3to(1000000)
 
     for n in range(2, 8):
-        print('n={}'.format(n))
+        # print('n={}'.format(n))
         # 'valid' primes are primes considered for a particular n
         valid_primes = list(filter(lambda p: count_duplicates(str(p)) >= n, primes))
         valid_primes_set = set(valid_primes)
@@ -89,8 +89,13 @@ if __name__ == '__main__':
 
             if len(relatives) >= 8:
                 if all(in_same_family(p1, p2, n) for p1 in relatives for p2 in relatives if p1 != p2):
-                    print(p, relatives)
-                    sys.exit(0)
+                    # print(p, relatives)
+                    return p
 
             relatives = set()
 
+
+if __name__ == '__main__':
+    solution = problem51()
+    print(solution)
+    assert solution == 121313

@@ -10,22 +10,28 @@ def get_primes(limit):
     return primes
 
 
-primes = get_primes(1000000)
-primes_lst = sorted(primes)
-max_length = 0
-max_p = 0
+def problem50():
+    primes = get_primes(1000000)
+    primes_lst = sorted(primes)
+    max_length = 0
+    max_p = 0
 
-for i, p in enumerate(primes_lst):
-    for length in range(max_length, len(primes) - i):
-        prime_sum = sum(primes_lst[i:i+length])
+    for i, p in enumerate(primes_lst):
+        for length in range(max_length, len(primes) - i):
+            prime_sum = sum(primes_lst[i:i+length])
 
-        # sum is too large, try next starting p
-        if prime_sum > 1000000:
-            break
+            # sum is too large, try next starting p
+            if prime_sum > 1000000:
+                break
 
-        if prime_sum in primes and length > max_length:
-            max_length = length
-            max_p = prime_sum
+            if prime_sum in primes and length > max_length:
+                max_length = length
+                max_p = prime_sum
+
+    return max_p
 
 
-print(max_p)
+if __name__ == '__main__':
+    solution = problem50()
+    print(solution)
+    assert solution == 997651

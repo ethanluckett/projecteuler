@@ -20,6 +20,6 @@ key = tuple(ord(c) for c in 'exp')
 
 plaintext = []
 for i, c in enumerate(ciphertext):
-	plaintext.append(c ^ key[i % 3])
+    plaintext.append(c ^ key[i % 3])
 
 print(sum(plaintext))

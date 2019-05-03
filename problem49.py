@@ -18,15 +18,21 @@ def are_permutations(p1, p2, p3):
     return p1 == p2 == p3
 
 
-primes = list(filter(lambda p: p > 1000, get_primes(10000)))
+def problem49():
+    primes = list(filter(lambda p: p > 1000, get_primes(10000)))
+
+    for i, p in enumerate(primes[:-2]):
+        p1 = p
+        for j in range(i+1, len(primes)-1):
+            p2 = primes[j]
+            p3 = p2 + (p2 - p1) # p3 - p2 == p2 - p1
+            
+            # we have 3 primes with a 
+            if p3 in primes and are_permutations(p1, p2, p3) and p1 != 1487:
+                return ''.join(map(str, (p1, p2, p3)))
 
 
-for i, p in enumerate(primes[:-2]):
-    p1 = p
-    for j in range(i+1, len(primes)-1):
-        p2 = primes[j]
-        p3 = p2 + (p2 - p1) # p3 - p2 == p2 - p1
-        
-        # we have 3 primes with a 
-        if p3 in primes and are_permutations(p1, p2, p3):
-            print(''.join(map(str, (p1, p2, p3))))
+if __name__ == '__main__':
+    solution = problem49()
+    print(solution)
+    assert solution == '296962999629'

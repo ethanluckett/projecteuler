@@ -18,105 +18,122 @@ import pytest
 (['6H', '4H', '5H', '3H', '2H'], (6,   0,  0,  0,  6,  1,  0,  0,  6,  0)),
 (['AH', 'KH', 'QH', 'JH', 'TH'], (14,  0,  0,  0, 14,  1,  0,  0, 14,  1))))
 def test_winning_functions(hand, values):
-	functions = [highest_card, one_pair, two_pair,
-	             three_of_a_kind, straight, flush, full_house,
-	             four_of_a_kind, straight_flush, royal_flush]
+    functions = [highest_card, one_pair, two_pair,
+                 three_of_a_kind, straight, flush, full_house,
+                 four_of_a_kind, straight_flush, royal_flush]
 
-	assert tuple(fn(hand) for fn in functions) == values
+    assert tuple(fn(hand) for fn in functions) == values
 
 
 def card_value(x):
-	try:
-		value = int(x[0])
-	except ValueError:
-		if x[0] == 'T':
-			value = 10
-		elif x[0] == 'J':
-			value = 11
-		elif x[0] == 'Q':
-			value = 12
-		elif x[0] == 'K':
-			value = 13
-		elif x[0] == 'A':
-			value = 14
-	return value
+    try:
+        value = int(x[0])
+    except ValueError:
+        if x[0] == 'T':
+            value = 10
+        elif x[0] == 'J':
+            value = 11
+        elif x[0] == 'Q':
+            value = 12
+        elif x[0] == 'K':
+            value = 13
+        elif x[0] == 'A':
+            value = 14
+    return value
+
 
 def sorted_values(hand):
-	return sorted(map(card_value, hand))
+    return sorted(map(card_value, hand))
+
 
 def highest_card(hand):
-	return sorted_values(hand)[-1]
+    return sorted_values(hand)[-1]
+
 
 def pairs(hand):
-	values = sorted_values(hand)
-	pairs = []
-	for i in range(1, 5):
-		if values[i] == values[i-1] and values[i] not in pairs:
-			pairs.append(values[i])
-	return pairs
+    values = sorted_values(hand)
+    pairs = []
+    for i in range(1, 5):
+        if values[i] == values[i-1] and values[i] not in pairs:
+            pairs.append(values[i])
+    return pairs
+
 
 def one_pair(hand):
-	p = pairs(hand)
-	return max(p) if len(p) >= 1 else 0
+    p = pairs(hand)
+    return max(p) if len(p) >= 1 else 0
+
 
 def two_pair(hand):
-	p = pairs(hand)
-	return max(p) if len(p) == 2 and p[0] != p[1] else 0
+    p = pairs(hand)
+    return max(p) if len(p) == 2 and p[0] != p[1] else 0
+
 
 def three_of_a_kind(hand):
-	values = sorted_values(hand)
-	for i in range(2, 5):
-		if values[i] == values[i-1] == values[i-2]:
-			return values[i]
-	return 0
+    values = sorted_values(hand)
+    for i in range(2, 5):
+        if values[i] == values[i-1] == values[i-2]:
+            return values[i]
+    return 0
+
 
 def straight(hand):
-	values = sorted_values(hand)
-	for i in range(1, 5):
-		if values[i] - values[i-1] != 1:
-			return 0
-	return values[-1]
+    values = sorted_values(hand)
+    for i in range(1, 5):
+        if values[i] - values[i-1] != 1:
+            return 0
+    return values[-1]
+
 
 def flush(hand):
-	for i in range(1, 5):
-		if hand[i][1] != hand[0][1]:
-			return 0
-	return 1
+    for i in range(1, 5):
+        if hand[i][1] != hand[0][1]:
+            return 0
+    return 1
+
 
 def full_house(hand):
-	return three_of_a_kind(hand) and two_pair(hand)
+    return three_of_a_kind(hand) and two_pair(hand)
+
 
 def four_of_a_kind(hand):
-	v = sorted_values(hand)
-	if v[0] == v[1] == v[2] == v[3]:
-		return v[0]
-	elif v[1] == v[2] == v[3] == v[4]:
-		return v[1]
-	return 0
+    v = sorted_values(hand)
+    if v[0] == v[1] == v[2] == v[3]:
+        return v[0]
+    elif v[1] == v[2] == v[3] == v[4]:
+        return v[1]
+    return 0
+
 
 def straight_flush(hand):
-	if straight(hand) and flush(hand):
-		return sorted_values(hand)[-1]
-	return 0
+    if straight(hand) and flush(hand):
+        return sorted_values(hand)[-1]
+    return 0
+
 
 def royal_flush(hand):
-	values = sorted_values(hand)
-	return straight_flush(hand) and values[0] == 10
+    values = sorted_values(hand)
+    return straight_flush(hand) and values[0] == 10
 
 
+def problem54():
+    hands = [(line.split()[:5], line.split()[5:]) for line in open('problem54.txt').read().strip().split('\n')]
 
-hands = [(line.split()[:5], line.split()[5:]) for line in open('problem54.txt').read().strip().split('\n')]
+    ranks = [royal_flush, straight_flush, four_of_a_kind, full_house, flush,
+                straight, three_of_a_kind, two_pair, one_pair, highest_card]
+    p1_wins = 0
+    for hand in hands:
+        p1_hand = tuple(fn(hand[0]) for fn in ranks)
+        p2_hand = tuple(fn(hand[1]) for fn in ranks)
+        for i in range(len(ranks)):
+            if p1_hand > p2_hand:
+                p1_wins += 1
+                break
+
+    return p1_wins
 
 
-ranks = [royal_flush, straight_flush, four_of_a_kind, full_house, flush,
-             straight, three_of_a_kind, two_pair, one_pair, highest_card]
-p1_wins = 0
-for hand in hands:
-	p1_hand = tuple(fn(hand[0]) for fn in ranks)
-	p2_hand = tuple(fn(hand[1]) for fn in ranks)
-	for i in range(len(ranks)):
-		if p1_hand > p2_hand:
-			p1_wins += 1
-			break
-
-print(p1_wins)
+if __name__ == '__main__':
+    solution = problem54()
+    print(solution)
+    assert solution == 376
