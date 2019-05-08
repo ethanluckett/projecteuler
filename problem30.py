@@ -1,12 +1,8 @@
-def check(x, d):
-    s = str(x)
-    return x == sum(int(x)**d for x in s)
-
-
 def problem30():
+    powers = {str(x): x**5 for x in range(10)}
     total = 0
-    for i in range(2, 10000000):
-        if check(i, 5):
+    for i in range(2, 1000000):
+        if i == sum(powers[digit] for digit in str(i)):
             total += i
 
     return total

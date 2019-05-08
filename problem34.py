@@ -2,7 +2,7 @@ import math
 
 
 def problem34():
-    nums = filter(lambda i: i == sum(math.factorial(int(x)) for x in str(i)), range(3, 10000000))
+    nums = filter(lambda i: i == sum(math.factorial(int(x)) for x in str(i)), range(3, 50000))
     return sum(nums)
 
 

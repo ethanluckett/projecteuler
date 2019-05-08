@@ -15,13 +15,15 @@ def problem23():
     # numbers which cannot be written as sum of two+ abundant numbers
     non_abundant_sums = set(range(28123))
 
-    abundant_nums = set(filter(is_abundant, range(1, 28123)))
+    abundant_nums = list(filter(is_abundant, range(1, 28123)))
     # print(abundant_nums)
     for i in abundant_nums:
         for j in abundant_nums:
             if i + j > 28123:
-                continue
-            non_abundant_sums.discard(i + j)
+                break
+
+            if i + j in non_abundant_sums:
+                non_abundant_sums.discard(i + j)
 
     return sum(non_abundant_sums)
 

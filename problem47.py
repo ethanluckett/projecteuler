@@ -16,21 +16,20 @@ def distinct_prime_factors(primes, n):
     factors = set()
     while n != 1:
         for p in primes:
-            if p > n:
-                break
             if n % p == 0:
                 factors.add(p)
                 n /= p
-    return factors
+                break
+    return len(factors)
 
 
 def problem47():
-    primes = get_primes()
+    primes = list(get_primes())
 
     i = 10
     lst = [0, 0, 0, 0]
     while lst != [4, 4, 4, 4]:
-        lst = lst[1:] + [len(distinct_prime_factors(primes, i))]
+        lst = lst[1:] + [distinct_prime_factors(primes, i)]
         i += 1
 
     return i-4 # i-4 since the lst is [i-4, i-3, i-2, i-1]
